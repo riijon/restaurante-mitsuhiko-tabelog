@@ -102,12 +102,14 @@ body {
 .tab-nav {
   background: var(--bg-white);
   border-bottom: 1px solid var(--border-gray);
+  overflow: visible;
 }
 
 .tab-nav-inner {
   display: flex;
   gap: 0;
   overflow-x: auto;
+  overflow-y: visible;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -131,18 +133,16 @@ body {
 
 .menu-tooltip {
   display: none;
-  position: absolute;
-  left: 50%;
+  position: fixed;
   transform: translateX(-50%);
-  top: 100%;
-  margin-top: 6px;
   background: rgba(0, 0, 0, 0.85);
   color: #fff;
   padding: 6px 8px;
   border-radius: 4px;
   font-size: 11px;
   white-space: nowrap;
-  z-index: 10;
+  z-index: 10000;
+  pointer-events: none;
 }
 
 .menu-tooltip.show {

@@ -54,9 +54,26 @@ function initializeModals() {
   // Review Modal
   const reviewModal = document.getElementById("reviewModal");
   const openReviewBtn = document.getElementById("openReviewModalBtn"); // From SP Nav
+  const openReviewBtnPC = document.getElementById("openReviewModalBtnPC"); // From PC Nav
   const closeReviewBtn = document.getElementById("closeReviewModal");
 
-  // Note: We might want a button on PC to open this too, or keep the "Visited" button logic
+  // Open review modal from SP Nav
+  if (openReviewBtn && reviewModal) {
+    openReviewBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      reviewModal.classList.add("active");
+      document.body.style.overflow = "hidden";
+    });
+  }
+
+  // Open review modal from PC Nav
+  if (openReviewBtnPC && reviewModal) {
+    openReviewBtnPC.addEventListener("click", (e) => {
+      e.preventDefault();
+      reviewModal.classList.add("active");
+      document.body.style.overflow = "hidden";
+    });
+  }
 
   if (closeReviewBtn && reviewModal) {
     closeReviewBtn.addEventListener("click", () => {
@@ -177,6 +194,10 @@ function initializeTabNavigation() {
       }
 
       if (link.id === "menuTabLink" && menuTooltip) {
+        // Calculate tooltip position relative to menu button (fixed positioning)
+        const menuButtonRect = link.getBoundingClientRect();
+        menuTooltip.style.top = `${menuButtonRect.bottom + 6}px`;
+        menuTooltip.style.left = `${menuButtonRect.left + menuButtonRect.width / 2}px`;
         menuTooltip.classList.add("show");
         setTimeout(() => menuTooltip.classList.remove("show"), 1500);
       }
