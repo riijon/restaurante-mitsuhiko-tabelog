@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeReviewToggle();
   initializeReviewExpandHandlers();
   initializeSaveButtons();
+  initializePhotoZoom();
 });
 
 // Initialize Modals
@@ -913,4 +914,43 @@ function escapeHtml(text) {
   const div = document.createElement("div");
   div.textContent = text;
   return div.innerHTML;
+}
+
+// Initialize Photo Zoom
+function initializePhotoZoom() {
+  const photoZoomModal = document.getElementById("photoZoomModal");
+  const photoZoomImage = document.getElementById("photoZoomImage");
+  const closePhotoZoom = document.getElementById("closePhotoZoom");
+
+  // Close modal
+  if (closePhotoZoom && photoZoomModal) {
+    closePhotoZoom.addEventListener("click", () => {
+      photoZoomModal.classList.remove("active");
+      document.body.style.overflow = "";
+    });
+  }
+
+  // Close on click outside
+  if (photoZoomModal) {
+    photoZoomModal.addEventListener("click", (e) => {
+      if (e.target === photoZoomModal) {
+        photoZoomModal.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+    });
+  }
+
+  // Add click handlers to user photos
+  document.addEventListener("click", (e) => {
+    const photoItem = e.target.closest(".user-photo-item");
+    if (photoItem) {
+      const img = photoItem.querySelector(".user-photo-image img");
+      if (img && photoZoomImage && photoZoomModal) {
+        photoZoomImage.src = img.src;
+        photoZoomImage.alt = img.alt;
+        photoZoomModal.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+    }
+  });
 }
