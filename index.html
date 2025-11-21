@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      RISTORANTE MITSUHIKO（リストランテ ミツヒコ）- 本格イタリアン【食べログ】
+    </title>
+    <meta
+      name="description"
+      content="RISTORANTE MITSUHIKO（リストランテ ミツヒコ）の口コミ・評価・料理写真。本格イタリア料理を提供する高級レストラン。"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="header-top">
+        <div class="container">
+          <div class="header-content">
+            <a href="#" class="logo">食べログ</a>
+            <div class="search-bar">
+              <input type="text" placeholder="エリア・駅" />
+              <input type="text" placeholder="ジャンル・店名" />
+            </div>
+            <nav class="header-nav">
+              <a href="#reviews">口コミ</a>
+              <a href="#review-form">口コミ投稿</a>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="tab-nav" id="tabNav">
+        <div class="container">
+          <div class="tab-nav-inner">
+            <a href="#top" class="tab-link active">トップ</a>
+            <a href="#photos" class="tab-link">写真</a>
+            <a href="#menu" class="tab-link">メニュー</a>
+            <a href="#info" class="tab-link">店舗情報</a>
+            <a href="#reviews" class="tab-link">口コミ</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Restaurant Hero -->
+    <section class="restaurant-hero" id="top">
+      <div class="container">
+        <div class="restaurant-header">
+          <div class="restaurant-main-image">
+            <img
+              src="assets/restaurant-interior.png"
+              alt="RISTORANTE MITSUHIKO 店内"
+            />
+          </div>
+          <div class="restaurant-info-header">
+            <h1 class="restaurant-title">RISTORANTE MITSUHIKO</h1>
+            <p class="restaurant-subtitle">リストランテ ミツヒコ</p>
+
+            <div class="rating-display">
+              <div class="rating-score-large" id="avgRating">4.2</div>
+              <div class="rating-details">
+                <div class="stars-inline" id="avgStars">
+                  <span class="star filled">★</span>
+                  <span class="star filled">★</span>
+                  <span class="star filled">★</span>
+                  <span class="star filled">★</span>
+                  <span class="star">★</span>
+                </div>
+                <div class="review-count-text">
+                  <span id="reviewCount">0</span>件の口コミ
+                </div>
+              </div>
+            </div>
+
+            <div class="restaurant-tags">
+              <span class="tag">イタリアン</span>
+              <span class="tag">高級</span>
+              <span class="tag">記念日</span>
+              <span class="tag">接待</span>
+              <span class="tag">南青山</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Store Info Section -->
+    <section class="info-section" id="info">
+      <div class="container">
+        <h2 class="section-header">店舗基本情報</h2>
+        <table class="info-table">
+          <tr>
+            <th>店名</th>
+            <td>RISTORANTE MITSUHIKO（リストランテ ミツヒコ）</td>
+          </tr>
+          <tr>
+            <th>ジャンル</th>
+            <td>イタリアン、西洋各国料理、ワインバー</td>
+          </tr>
+          <tr>
+            <th>予約・お問い合わせ</th>
+            <td>03-XXXX-XXXX</td>
+          </tr>
+          <tr>
+            <th>住所</th>
+            <td>東京都港区南青山3-14-23</td>
+          </tr>
+          <tr>
+            <th>交通手段</th>
+            <td>
+              東京メトロ銀座線・半蔵門線・千代田線 表参道駅 A4出口より徒歩5分
+            </td>
+          </tr>
+          <tr>
+            <th>営業時間</th>
+            <td>
+              [ランチ] 11:30～14:00（L.O. 13:30）<br />
+              [ディナー] 18:00～22:00（L.O. 21:00）
+            </td>
+          </tr>
+          <tr>
+            <th>定休日</th>
+            <td>火曜日</td>
+          </tr>
+          <tr>
+            <th>予算</th>
+            <td>
+              [ディナー] ¥15,000～¥20,000<br />
+              [ランチ] ¥5,000～¥8,000
+            </td>
+          </tr>
+          <tr>
+            <th>支払い方法</th>
+            <td>カード可（VISA、Master、JCB、AMEX、Diners）、電子マネー可</td>
+          </tr>
+          <tr>
+            <th>サービス料・チャージ</th>
+            <td>ディナーのみ10%</td>
+          </tr>
+          <tr>
+            <th>席数</th>
+            <td>28席（カウンター6席、テーブル22席）</td>
+          </tr>
+          <tr>
+            <th>個室</th>
+            <td>有（2～6名様用、1室）</td>
+          </tr>
+          <tr>
+            <th>貸切</th>
+            <td>可（20名様～）</td>
+          </tr>
+          <tr>
+            <th>喫煙・禁煙</th>
+            <td>全席禁煙</td>
+          </tr>
+          <tr>
+            <th>駐車場</th>
+            <td>無（近隣にコインパーキングあり）</td>
+          </tr>
+          <tr>
+            <th>特徴</th>
+            <td>
+              ソムリエがいる、ワインにこだわる、カウンター席あり、ソファー席あり、オープンキッチン
+            </td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- Photos Section -->
+    <section class="photo-gallery" id="photos">
+      <div class="container">
+        <h2 class="section-header">写真</h2>
+        <div class="gallery-tabs">
+          <div class="gallery-tab active">すべて</div>
+          <div class="gallery-tab">料理</div>
+          <div class="gallery-tab">店内</div>
+          <div class="gallery-tab">外観</div>
+        </div>
+        <div class="photo-grid">
+          <div class="photo-item">
+            <img src="assets/dish-pasta.png" alt="手打ちタリアテッレ" />
+          </div>
+          <div class="photo-item">
+            <img src="assets/dish-risotto.png" alt="サフランリゾット" />
+          </div>
+          <div class="photo-item">
+            <img src="assets/dish-dessert.png" alt="ティラミス" />
+          </div>
+          <div class="photo-item">
+            <img src="assets/restaurant-interior.png" alt="店内" />
+          </div>
+          <div class="photo-item">
+            <img src="assets/restaurant-exterior.png" alt="外観" />
+          </div>
+          <div class="photo-item">
+            <img src="assets/chef-mitsuhiko.jpg" alt="シェフ光彦" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chef Section -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-header">シェフ紹介</h2>
+        <div class="chef-profile">
+          <div class="chef-image">
+            <img src="assets/chef-mitsuhiko.jpg" alt="オーナーシェフ 光彦" />
+          </div>
+          <div class="chef-details">
+            <h3 class="chef-name">オーナーシェフ 光彦</h3>
+            <p class="chef-bio">
+              イタリア・トスカーナ地方の三ツ星レストランで10年の修業を積んだ後、2018年に帰国。南青山にRISTORANTE
+              MITSUHIKOをオープン。
+              伝統的なイタリア料理の技法を守りながらも、日本の四季折々の食材を活かした独創的な料理を提供しています。
+            </p>
+            <p class="chef-bio">
+              「素材の本質を引き出し、食べる人の心に残る一皿を」をモットーに、手打ちパスタをはじめとする全ての料理を丁寧に仕上げています。
+              ワインソムリエの資格も持ち、料理に合わせた最適なワインペアリングもご提案いたします。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="section" id="menu">
+      <div class="container">
+        <h2 class="section-header">メニュー</h2>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-image">
+              <img src="assets/dish-pasta.png" alt="手打ちタリアテッレ" />
+            </div>
+            <div class="menu-details">
+              <h3 class="menu-name">
+                手打ちタリアテッレ トリュフとポルチーニ茸
+              </h3>
+              <p class="menu-description">
+                イタリア産の黒トリュフと香り高いポルチーニ茸を贅沢に使用した当店の看板メニュー
+              </p>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-image">
+              <img src="assets/dish-risotto.png" alt="サフランリゾット" />
+            </div>
+            <div class="menu-details">
+              <h3 class="menu-name">サフランリゾット 魚介のフリット添え</h3>
+              <p class="menu-description">
+                芳醇なサフランの香りと新鮮な魚介の旨味が溶け合う逸品
+              </p>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-image">
+              <img src="assets/dish-dessert.png" alt="ティラミス" />
+            </div>
+            <div class="menu-details">
+              <h3 class="menu-name">自家製ティラミス</h3>
+              <p class="menu-description">
+                マスカルポーネチーズとエスプレッソの絶妙なハーモニー
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="section" id="reviews">
+      <div class="container">
+        <h2 class="section-header">口コミ</h2>
+        <div id="reviewsList" class="reviews-list">
+          <div class="loading">口コミを読み込み中...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Review Form -->
+    <section class="review-form-section" id="review-form">
+      <div class="container">
+        <h2 class="section-header">口コミを投稿する</h2>
+        <form id="reviewForm" class="review-form">
+          <div class="form-group">
+            <label class="form-label" for="reviewerName"
+              >お名前 <span class="required">*</span></label
+            >
+            <input
+              type="text"
+              id="reviewerName"
+              name="reviewerName"
+              class="form-input"
+              required
+              maxlength="50"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="rating"
+              >評価 <span class="required">*</span></label
+            >
+            <div class="rating-input" id="ratingInput">
+              <span class="star-input" data-rating="1">★</span>
+              <span class="star-input" data-rating="2">★</span>
+              <span class="star-input" data-rating="3">★</span>
+              <span class="star-input" data-rating="4">★</span>
+              <span class="star-input" data-rating="5">★</span>
+            </div>
+            <input type="hidden" id="rating" name="rating" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="visitDate">訪問日</label>
+            <input
+              type="date"
+              id="visitDate"
+              name="visitDate"
+              class="form-input"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="comment"
+              >口コミ内容 <span class="required">*</span></label
+            >
+            <textarea
+              id="comment"
+              name="comment"
+              class="form-textarea"
+              rows="8"
+              required
+              maxlength="1000"
+              placeholder="料理の味、サービス、雰囲気など、お店の感想をお聞かせください"
+            ></textarea>
+            <div class="char-count"><span id="charCount">0</span>/1000</div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-submit">口コミを投稿する</button>
+          </div>
+        </form>
+        <div id="formMessage" class="form-message"></div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2025 RISTORANTE MITSUHIKO. All rights reserved.</p>
+        <p>※この店舗は架空のレストランです</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

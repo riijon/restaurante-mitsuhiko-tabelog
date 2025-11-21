@@ -1,0 +1,8 @@
+# 公開用にビルド不要、そのまま静的ファイルとして配信
+# Cloudflare Pagesが自動的に処理
+
+node_modules/
+.wrangler/
+.dev.vars
+*.log
+.DS_Store
