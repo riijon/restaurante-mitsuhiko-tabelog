@@ -34,7 +34,7 @@ export async function onRequestPost(context) {
   try {
     // Parse request body
     const body = await request.json();
-    const { reviewer_name, rating, comment, visit_date } = body;
+    const { reviewer_name, rating, comment, visit_date, user_icon } = body;
 
     // Validate input
     if (!reviewer_name || !rating || !comment) {
@@ -91,11 +91,11 @@ export async function onRequestPost(context) {
       );
     }
 
-    // Insert review into database
+    // Insert review into database with user_icon
     const result = await env.DB.prepare(
-      "INSERT INTO reviews (reviewer_name, rating, comment, visit_date) VALUES (?, ?, ?, ?)"
+      "INSERT INTO reviews (reviewer_name, rating, comment, visit_date, user_icon) VALUES (?, ?, ?, ?, ?)"
     )
-      .bind(reviewer_name, rating, comment, visit_date)
+      .bind(reviewer_name, rating, comment, visit_date, user_icon || "👤")
       .run();
 
     return new Response(

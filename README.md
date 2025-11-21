@@ -1,4 +1,4 @@
-# RISTORANTE MITSUHIKO - 食べログスタイル口コミサイト
+# RISTORANTE MITSUHIKO - 食べグロスタイル口コミサイト
 
 イタリアンレストラン「RISTORANTE MITSUHIKO（リストランテ ミツヒコ）」の口コミサイトです。Tabelog 風のデザインで、ユーザーはログインなしで口コミを投稿できます。
 
@@ -24,10 +24,11 @@
 
 ## ローカル開発環境のセットアップ
 
-### 1. Wrangler のインストール
+### 1. 依存インストール & Wrangler セットアップ
 
 ```bash
 npm install -g wrangler
+npm install
 ```
 
 ### 2. Cloudflare アカウントでログイン
@@ -36,50 +37,52 @@ npm install -g wrangler
 wrangler login
 ```
 
-### 3. D1 データベースの作成
+### 3. D1 データベースの作成（本番/ローカル兼用）
 
 ```bash
-wrangler d1 create mitsuhiko-reviews
+wrangler d1 create mitsuhiko-reviews-prod
 ```
 
-作成後、表示される`database_id`を`wrangler.toml`の該当箇所に記入してください。
+作成後、表示される`database_id`を`wrangler.toml`の該当箇所に記入してください（本リポジトリでは `mitsuhiko-reviews-prod` 固定で運用）。
 
 ### 4. データベーススキーマの作成
 
 ```bash
-wrangler d1 execute mitsuhiko-reviews --local --file=schema.sql
+npm run db:migrate
 ```
 
 ### 5. シードデータの投入
 
 ```bash
-wrangler d1 execute mitsuhiko-reviews --local --file=seed.sql
+npm run db:seed
 ```
 
 ### 6. ローカル開発サーバーの起動
 
 ```bash
-wrangler pages dev . --d1=DB=mitsuhiko-reviews
+npm run dev
 ```
 
 ブラウザで `http://localhost:8788` を開いてサイトを確認できます。
+
+> 参考: `npm run dev` では D1 バインディング (`DB= mitsuhiko-reviews-prod`) と R2 バインディング (`PHOTOS=local-photos`) をローカルで自動スタブしています。実際の R2 バケットは不要で、そのまま写真アップロードも動作確認できます。
 
 ## Cloudflare へのデプロイ
 
 ### 1. D1 データベースの作成（本番環境）
 
 ```bash
-wrangler d1 create mitsuhiko-reviews
+wrangler d1 create mitsuhiko-reviews-prod
 ```
 
 ### 2. 本番環境のスキーマとシードデータを作成
 
 ```bash
 # スキーマ作成
-wrangler d1 execute mitsuhiko-reviews --remote --file=schema.sql
+wrangler d1 execute mitsuhiko-reviews-prod --remote --file=schema.sql
 
 # シードデータ投入
-wrangler d1 execute mitsuhiko-reviews --remote --file=seed.sql
+wrangler d1 execute mitsuhiko-reviews-prod --remote --file=seed.sql
 ```
 
 ### 3. Cloudflare Pages へのデプロイ
@@ -96,7 +99,7 @@ wrangler pages deploy . --project-name=restaurante-mitsuhiko
 2. **Pages** → **Create a project** → **Connect to Git** または **Direct Upload**
 3. プロジェクトをアップロード
 4. **Settings** → **Functions** → **D1 database bindings**
-5. 変数名: `DB`、D1 データベース: `mitsuhiko-reviews` を選択
+5. 変数名: `DB`、D1 データベース: `mitsuhiko-reviews-prod` を選択
 6. 保存してデプロイ
 
 ### 4. D1 データベースのバインディング設定
@@ -107,7 +110,7 @@ Cloudflare Dashboard で:
 2. **Settings** → **Functions**
 3. **D1 database bindings** で以下を追加:
    - Variable name: `DB`
-   - D1 database: `mitsuhiko-reviews`
+   - D1 database: `mitsuhiko-reviews-prod`
 
 ## プロジェクト構造
 
@@ -187,6 +190,21 @@ CREATE TABLE reviews (
     rating INTEGER NOT NULL CHECK(rating >= 1 AND rating <= 5),
     comment TEXT NOT NULL,
     visit_date DATE,
+    user_icon TEXT DEFAULT '👤',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE photos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    filename TEXT NOT NULL,
+    caption TEXT,
+    uploader_name TEXT,
+    file_size INTEGER,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE saves (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 ```
@@ -204,15 +222,21 @@ CREATE TABLE reviews (
 ### ローカルで D1 データをリセットする
 
 ```bash
-wrangler d1 execute mitsuhiko-reviews --local --command="DROP TABLE IF EXISTS reviews"
-wrangler d1 execute mitsuhiko-reviews --local --file=schema.sql
-wrangler d1 execute mitsuhiko-reviews --local --file=seed.sql
+npm run db:reset
 ```
 
 ### D1 データベースの中身を確認
 
 ```bash
-wrangler d1 execute mitsuhiko-reviews --local --command="SELECT * FROM reviews"
+wrangler d1 execute mitsuhiko-reviews-prod --local --command="SELECT * FROM reviews"
+```
+
+### 既存のローカル DB にアイコン列を追加したい場合
+
+以前のスキーマで作成した DB がある場合は、以下で `user_icon` 列を追加できます。
+
+```bash
+wrangler d1 execute mitsuhiko-reviews-prod --local --file=migration-user-icon.sql
 ```
 
 ## トラブルシューティング
@@ -220,7 +244,7 @@ wrangler d1 execute mitsuhiko-reviews --local --command="SELECT * FROM reviews"
 ### 「DB is not defined」エラー
 
 - `wrangler.toml`に D1 バインディングが正しく設定されているか確認
-- ローカル開発時は `--d1=DB=mitsuhiko-reviews` オプションを付けているか確認
+- ローカル開発時は `--d1=DB=mitsuhiko-reviews-prod` オプションを付けているか確認
 
 ### 口コミが表示されない
 

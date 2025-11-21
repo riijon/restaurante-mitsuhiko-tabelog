@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-      RISTORANTE MITSUHIKO（リストランテ ミツヒコ）- 本格イタリアン【食べログ】
+      RISTORANTE MITSUHIKO（リストランテ ミツヒコ）- 本格イタリアン【食べグロ】
     </title>
     <meta
       name="description"
@@ -18,10 +18,14 @@
       <div class="header-top">
         <div class="container">
           <div class="header-content">
-            <a href="#" class="logo">食べログ</a>
-            <div class="search-bar">
-              <input type="text" placeholder="エリア・駅" />
-              <input type="text" placeholder="ジャンル・店名" />
+            <a href="#" class="logo">食べグロ</a>
+            <div class="search-bar pc-only">
+              <input type="text" placeholder="エリア・駅" id="searchArea" />
+              <input
+                type="text"
+                placeholder="ジャンル・店名"
+                id="searchQuery"
+              />
             </div>
             <nav class="header-nav">
               <a href="#reviews">口コミ</a>
@@ -35,52 +39,197 @@
           <div class="tab-nav-inner">
             <a href="#top" class="tab-link active">トップ</a>
             <a href="#photos" class="tab-link">写真</a>
-            <a href="#menu" class="tab-link">メニュー</a>
-            <a href="#info" class="tab-link">店舗情報</a>
+            <a href="#menu" class="tab-link menu-link" id="menuTabLink">
+              メニュー
+              <span class="menu-tooltip" id="menuTooltip">かんがえちう</span>
+            </a>
             <a href="#reviews" class="tab-link">口コミ</a>
           </div>
         </div>
       </div>
     </header>
 
-    <!-- Restaurant Hero -->
-    <section class="restaurant-hero" id="top">
-      <div class="container">
-        <div class="restaurant-header">
-          <div class="restaurant-main-image">
-            <img
-              src="assets/restaurant-interior.png"
-              alt="RISTORANTE MITSUHIKO 店内"
-            />
+    <!-- Hero Section with Overlay -->
+    <section class="restaurant-hero-visual" id="top">
+      <div class="hero-image-container">
+        <img
+          src="assets/restaurant-interior.png"
+          alt="RISTORANTE MITSUHIKO"
+          class="hero-bg-image"
+        />
+        <div class="hero-overlay">
+          <div class="hero-text-content">
+            <p class="hero-tagline">2025年、楽しいことしかしたくない</p>
+            <h1 class="hero-title">RISTORANTE MITSUHIKO</h1>
+            <p class="hero-subtitle">(リストランテ ミツヒコ)</p>
           </div>
-          <div class="restaurant-info-header">
-            <h1 class="restaurant-title">RISTORANTE MITSUHIKO</h1>
-            <p class="restaurant-subtitle">リストランテ ミツヒコ</p>
+        </div>
+      </div>
+    </section>
 
-            <div class="rating-display">
-              <div class="rating-score-large" id="avgRating">4.2</div>
-              <div class="rating-details">
-                <div class="stars-inline" id="avgStars">
+    <!-- Restaurant Info Header -->
+    <section class="restaurant-info-header">
+      <div class="container">
+        <div class="restaurant-header-content">
+          <div class="restaurant-info-main">
+            <h2 class="restaurant-name">RISTORANTE MITSUHIKO</h2>
+            <p class="restaurant-location-genre">青葉通り駅/フレンチ</p>
+
+            <div class="rating-row">
+              <div class="rating-inline">
+                <div class="stars-inline rating-stars" id="avgStars">
                   <span class="star filled">★</span>
                   <span class="star filled">★</span>
                   <span class="star filled">★</span>
                   <span class="star filled">★</span>
                   <span class="star">★</span>
                 </div>
-                <div class="review-count-text">
-                  <span id="reviewCount">0</span>件の口コミ
+                <div class="rating-score-large" id="avgRating">4.2</div>
+                <div class="metric-inline review-count">
+                  <span class="metric-icon">💬</span>
+                  <span id="reviewCount">0</span>人
+                  <span id="visitedCount" class="visually-hidden">0</span>
+                </div>
+                <div class="metric-inline save-count">
+                  <svg
+                    class="metric-icon metric-save-icon line"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                  <svg
+                    class="metric-icon metric-save-icon filled"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M17 3H7a2 2 0 0 0-2 2v16l7-5 7 5V5a2 2 0 0 0-2-2z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                  <span id="saveCount">0</span>人
                 </div>
               </div>
             </div>
 
-            <div class="restaurant-tags">
-              <span class="tag">イタリアン</span>
-              <span class="tag">高級</span>
-              <span class="tag">記念日</span>
-              <span class="tag">接待</span>
-              <span class="tag">南青山</span>
+            <div class="budget-display">
+              <div class="budget-item">
+                <span class="budget-icon">🌙</span>
+                <span class="budget-amount">¥15,000～¥20,000</span>
+              </div>
+              <div class="budget-item">
+                <span class="budget-icon">☀️</span>
+                <span class="budget-amount">¥5,000～¥8,000</span>
+              </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Photos Section (Moved before Catchphrase) -->
+    <section class="photo-gallery" id="photos">
+      <div class="container">
+        <h2 class="section-header">お店のこだわり</h2>
+        <div class="photo-scroll-container">
+          <div class="photo-item-with-desc">
+            <div class="photo-image">
+              <img src="assets/dish-pasta.png" alt="手打ちタリアテッレ" />
+            </div>
+            <p class="photo-caption">
+              トリュフとポルチーニ茸の手打ちタリアテッレ
+            </p>
+          </div>
+          <div class="photo-item-with-desc">
+            <div class="photo-image">
+              <img src="assets/dish-risotto.png" alt="サフランリゾット" />
+            </div>
+            <p class="photo-caption">サフランリゾット 魚介のフリット添え</p>
+          </div>
+          <div class="photo-item-with-desc">
+            <div class="photo-image">
+              <img src="assets/dish-dessert.png" alt="ティラミス" />
+            </div>
+            <p class="photo-caption">自家製ティラミス</p>
+          </div>
+          <div class="photo-item-with-desc">
+            <div class="photo-image">
+              <img src="assets/restaurant-interior.png" alt="店内" />
+            </div>
+            <p class="photo-caption">洗練された店内空間</p>
+          </div>
+          <div class="photo-item-with-desc">
+            <div class="photo-image">
+              <img src="assets/restaurant-exterior.png" alt="外観" />
+            </div>
+            <p class="photo-caption">閑静な路地に佇む外観</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Catchphrase and Description -->
+    <section class="catchphrase-section">
+      <div class="container">
+        <h3 class="catchphrase">素材の味、香り、旬を最大限に伝えたい</h3>
+        <p class="description-text">
+          閑静な路地にあるコンパクトな食べ処「RISTORANTE
+          MITSUHIKO」。イタリア・トスカーナ地方での10年の修業を経て、シェフ充彦が2024年にオープン。
+          伝統的なイタリア料理の技法を守りながらも、日本の四季折々の食材を活かした独創的な料理を提供しています。
+          手打ちパスタをはじめとする全ての料理を丁寧に仕上げ、ワインソムリエの資格を持つシェフが料理に合わせた最適なワインペアリングもご提案いたします。
+        </p>
+      </div>
+    </section>
+
+    <!-- User Photos Section -->
+    <section class="user-photos-section">
+      <div class="container">
+        <h2 class="section-header">ユーザー投稿写真</h2>
+
+        <!-- Photos Grid -->
+        <div id="userPhotosGrid" class="user-photos-grid">
+          <div class="loading">投稿写真を読み込み中...</div>
+        </div>
+
+        <!-- Upload Button (bottom) -->
+        <div class="photo-upload-trigger">
+          <button class="btn-open-photo-modal" id="openPhotoModal">
+            <span class="upload-icon">📷</span>
+            <span>写真を投稿する</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="section" id="reviews">
+      <div class="container">
+        <h2 class="section-header">口コミ</h2>
+
+        <!-- Pickup Review Section -->
+        <div id="pickupReviewSection" class="pickup-review-section">
+          <div class="pickup-header">
+            <span class="pickup-icon">🏅</span>
+            <span class="pickup-title">ピックアップ！口コミ</span>
+          </div>
+          <div id="pickupReview" class="pickup-review-content">
+            <!-- Pickup review will be inserted here -->
+          </div>
+        </div>
+
+        <!-- Regular Reviews -->
+        <div id="reviewsList" class="reviews-list">
+          <div class="loading">口コミを読み込み中...</div>
+        </div>
+        <div class="reviews-toggle">
+          <button id="toggleReviewsBtn" class="btn-toggle-reviews">
+            全て表示
+          </button>
         </div>
       </div>
     </section>
@@ -89,6 +238,20 @@
     <section class="info-section" id="info">
       <div class="container">
         <h2 class="section-header">店舗基本情報</h2>
+        <!-- Google Maps -->
+        <div class="map-container">
+          <h3 class="map-title">地図</h3>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3131.0929!2d140.87166!3d38.26109!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5f8a282e0000000%3A0x0!2zMzjCsDE1JzQwLjAiTiAxNDDCsDUyJzE4LjAiRQ!5e0!3m2!1sja!2sjp!4v1234567890"
+            width="100%"
+            height="200"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          >
+          </iframe>
+        </div>
         <table class="info-table">
           <tr>
             <th>店名</th>
@@ -100,17 +263,17 @@
           </tr>
           <tr>
             <th>予約・お問い合わせ</th>
-            <td>03-XXXX-XXXX</td>
+            <td>
+              <a href="tel:09097446202" class="phone-link">090-9744-6202</a>
+            </td>
           </tr>
           <tr>
             <th>住所</th>
-            <td>東京都港区南青山3-14-23</td>
+            <td>宮城県仙台市青葉区一番町3-6-11</td>
           </tr>
           <tr>
             <th>交通手段</th>
-            <td>
-              東京メトロ銀座線・半蔵門線・千代田線 表参道駅 A4出口より徒歩5分
-            </td>
+            <td>JR仙台駅より徒歩15分、地下鉄南北線 広瀬通駅より徒歩5分</td>
           </tr>
           <tr>
             <th>営業時間</th>
@@ -152,7 +315,7 @@
           </tr>
           <tr>
             <th>喫煙・禁煙</th>
-            <td>全席禁煙</td>
+            <td>喫煙可能席あり（完全分煙）</td>
           </tr>
           <tr>
             <th>駐車場</th>
@@ -168,183 +331,201 @@
       </div>
     </section>
 
-    <!-- Photos Section -->
-    <section class="photo-gallery" id="photos">
-      <div class="container">
-        <h2 class="section-header">写真</h2>
-        <div class="gallery-tabs">
-          <div class="gallery-tab active">すべて</div>
-          <div class="gallery-tab">料理</div>
-          <div class="gallery-tab">店内</div>
-          <div class="gallery-tab">外観</div>
+    <!-- Photo Upload Modal -->
+    <div id="photoModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">写真を投稿する</h3>
+          <button class="modal-close" id="closePhotoModal">&times;</button>
         </div>
-        <div class="photo-grid">
-          <div class="photo-item">
-            <img src="assets/dish-pasta.png" alt="手打ちタリアテッレ" />
-          </div>
-          <div class="photo-item">
-            <img src="assets/dish-risotto.png" alt="サフランリゾット" />
-          </div>
-          <div class="photo-item">
-            <img src="assets/dish-dessert.png" alt="ティラミス" />
-          </div>
-          <div class="photo-item">
-            <img src="assets/restaurant-interior.png" alt="店内" />
-          </div>
-          <div class="photo-item">
-            <img src="assets/restaurant-exterior.png" alt="外観" />
-          </div>
-          <div class="photo-item">
-            <img src="assets/chef-mitsuhiko.jpg" alt="シェフ光彦" />
-          </div>
-        </div>
-      </div>
-    </section>
+        <div class="modal-body">
+          <form id="photoUploadForm" class="upload-form">
+            <div class="upload-input-group">
+              <label for="photoFile" class="upload-label">
+                <span class="upload-icon">📷</span>
+                <span class="upload-text">写真を選択</span>
+              </label>
+              <input
+                type="file"
+                id="photoFile"
+                name="photoFile"
+                accept="image/jpeg,image/png,image/webp"
+                multiple
+                class="file-input"
+              />
+            </div>
 
-    <!-- Chef Section -->
-    <section class="section">
-      <div class="container">
-        <h2 class="section-header">シェフ紹介</h2>
-        <div class="chef-profile">
-          <div class="chef-image">
-            <img src="assets/chef-mitsuhiko.jpg" alt="オーナーシェフ 光彦" />
-          </div>
-          <div class="chef-details">
-            <h3 class="chef-name">オーナーシェフ 光彦</h3>
-            <p class="chef-bio">
-              イタリア・トスカーナ地方の三ツ星レストランで10年の修業を積んだ後、2018年に帰国。南青山にRISTORANTE
-              MITSUHIKOをオープン。
-              伝統的なイタリア料理の技法を守りながらも、日本の四季折々の食材を活かした独創的な料理を提供しています。
-            </p>
-            <p class="chef-bio">
-              「素材の本質を引き出し、食べる人の心に残る一皿を」をモットーに、手打ちパスタをはじめとする全ての料理を丁寧に仕上げています。
-              ワインソムリエの資格も持ち、料理に合わせた最適なワインペアリングもご提案いたします。
-            </p>
-          </div>
+            <!-- Thumbnail Preview -->
+            <div id="thumbnailPreview" class="thumbnail-preview"></div>
+
+            <div class="upload-meta">
+              <input
+                type="text"
+                id="photoCaption"
+                placeholder="写真の説明（任意）"
+                class="form-input"
+                maxlength="100"
+              />
+              <input
+                type="text"
+                id="photoUploader"
+                placeholder="お名前（任意）"
+                class="form-input"
+                maxlength="50"
+              />
+            </div>
+            <button type="submit" class="btn-upload">投稿する</button>
+          </form>
+          <div id="uploadMessage" class="upload-message"></div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Menu Section -->
-    <section class="section" id="menu">
-      <div class="container">
-        <h2 class="section-header">メニュー</h2>
-        <div class="menu-grid">
-          <div class="menu-item">
-            <div class="menu-image">
-              <img src="assets/dish-pasta.png" alt="手打ちタリアテッレ" />
+    <!-- Review Modal -->
+    <div id="reviewModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">口コミを投稿する</h3>
+          <button class="modal-close" id="closeReviewModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="reviewForm" class="review-form">
+            <div class="form-group">
+              <label class="form-label" for="reviewerName"
+                >お名前 <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="reviewerName"
+                name="reviewerName"
+                class="form-input"
+                required
+                maxlength="50"
+              />
             </div>
-            <div class="menu-details">
-              <h3 class="menu-name">
-                手打ちタリアテッレ トリュフとポルチーニ茸
-              </h3>
-              <p class="menu-description">
-                イタリア産の黒トリュフと香り高いポルチーニ茸を贅沢に使用した当店の看板メニュー
-              </p>
+
+            <div class="form-group">
+              <label class="form-label">アイコン選択（任意）</label>
+              <div class="icon-selector" id="iconSelector">
+                <!-- Icons will be inserted by JavaScript -->
+              </div>
+              <input type="hidden" id="userIcon" name="userIcon" value="👤" />
             </div>
-          </div>
-          <div class="menu-item">
-            <div class="menu-image">
-              <img src="assets/dish-risotto.png" alt="サフランリゾット" />
+
+            <div class="form-group">
+              <label class="form-label" for="rating"
+                >評価 <span class="required">*</span></label
+              >
+              <div class="rating-input" id="ratingInput">
+                <span class="star-input" data-rating="1">★</span>
+                <span class="star-input" data-rating="2">★</span>
+                <span class="star-input" data-rating="3">★</span>
+                <span class="star-input" data-rating="4">★</span>
+                <span class="star-input" data-rating="5">★</span>
+              </div>
+              <input type="hidden" id="rating" name="rating" required />
             </div>
-            <div class="menu-details">
-              <h3 class="menu-name">サフランリゾット 魚介のフリット添え</h3>
-              <p class="menu-description">
-                芳醇なサフランの香りと新鮮な魚介の旨味が溶け合う逸品
-              </p>
+
+            <div class="form-group">
+              <label class="form-label" for="visitDate">訪問日</label>
+              <input
+                type="date"
+                id="visitDate"
+                name="visitDate"
+                class="form-input"
+              />
             </div>
-          </div>
-          <div class="menu-item">
-            <div class="menu-image">
-              <img src="assets/dish-dessert.png" alt="ティラミス" />
+
+            <div class="form-group">
+              <label class="form-label" for="comment"
+                >口コミ内容 <span class="required">*</span></label
+              >
+              <textarea
+                id="comment"
+                name="comment"
+                class="form-textarea"
+                rows="8"
+                required
+                maxlength="1000"
+                placeholder="料理の味、サービス、雰囲気など、お店の感想をお聞かせください"
+              ></textarea>
+              <div class="char-count"><span id="charCount">0</span>/1000</div>
             </div>
-            <div class="menu-details">
-              <h3 class="menu-name">自家製ティラミス</h3>
-              <p class="menu-description">
-                マスカルポーネチーズとエスプレッソの絶妙なハーモニー
-              </p>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-submit">口コミを投稿する</button>
             </div>
-          </div>
+          </form>
+          <div id="formMessage" class="form-message"></div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Reviews Section -->
-    <section class="section" id="reviews">
-      <div class="container">
-        <h2 class="section-header">口コミ</h2>
-        <div id="reviewsList" class="reviews-list">
-          <div class="loading">口コミを読み込み中...</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Review Form -->
-    <section class="review-form-section" id="review-form">
-      <div class="container">
-        <h2 class="section-header">口コミを投稿する</h2>
-        <form id="reviewForm" class="review-form">
-          <div class="form-group">
-            <label class="form-label" for="reviewerName"
-              >お名前 <span class="required">*</span></label
-            >
-            <input
-              type="text"
-              id="reviewerName"
-              name="reviewerName"
-              class="form-input"
-              required
-              maxlength="50"
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="rating"
-              >評価 <span class="required">*</span></label
-            >
-            <div class="rating-input" id="ratingInput">
-              <span class="star-input" data-rating="1">★</span>
-              <span class="star-input" data-rating="2">★</span>
-              <span class="star-input" data-rating="3">★</span>
-              <span class="star-input" data-rating="4">★</span>
-              <span class="star-input" data-rating="5">★</span>
-            </div>
-            <input type="hidden" id="rating" name="rating" required />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="visitDate">訪問日</label>
-            <input
-              type="date"
-              id="visitDate"
-              name="visitDate"
-              class="form-input"
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="comment"
-              >口コミ内容 <span class="required">*</span></label
-            >
-            <textarea
-              id="comment"
-              name="comment"
-              class="form-textarea"
-              rows="8"
-              required
-              maxlength="1000"
-              placeholder="料理の味、サービス、雰囲気など、お店の感想をお聞かせください"
-            ></textarea>
-            <div class="char-count"><span id="charCount">0</span>/1000</div>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="btn-submit">口コミを投稿する</button>
-          </div>
-        </form>
-        <div id="formMessage" class="form-message"></div>
-      </div>
-    </section>
+    <!-- SP Fixed Bottom Navigation (Half-width Phone Button) -->
+    <nav class="sp-fixed-nav">
+      <button class="sp-nav-btn" id="spVisitedBtn">
+        <svg
+          class="sp-nav-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+          ></path>
+        </svg>
+        <span class="sp-nav-label">行った</span>
+      </button>
+      <button class="sp-nav-btn" id="spShareBtn">
+        <svg
+          class="sp-nav-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+          <polyline points="16 6 12 2 8 6"></polyline>
+          <line x1="12" y1="2" x2="12" y2="15"></line>
+        </svg>
+        <span class="sp-nav-label">共有</span>
+        <span class="sp-tooltip" id="shareTooltip">URLをコピーしました！</span>
+      </button>
+      <button class="sp-nav-btn" id="spSaveBtn">
+        <svg
+          class="sp-nav-icon save-icon line"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <svg
+          class="sp-nav-icon save-icon filled"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M17 3H7a2 2 0 0 0-2 2v16l7-5 7 5V5a2 2 0 0 0-2-2z"></path>
+        </svg>
+        <span class="sp-nav-label" id="spSaveLabel">保存</span>
+      </button>
+      <a href="tel:09097446202" class="sp-nav-btn phone-btn">
+        <svg
+          class="sp-nav-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+          ></path>
+        </svg>
+        <span class="sp-nav-label">電話</span>
+      </a>
+    </nav>
 
     <!-- Footer -->
     <footer class="footer">

@@ -1,11 +1,21 @@
 name = "restaurante-mitsuhiko-tabelog"
 compatibility_date = "2024-01-01"
-
-# Cloudflare Pages configuration
 pages_build_output_dir = "."
 
-# D1 Database binding
 [[d1_databases]]
+binding = "DB"
+database_name = "mitsuhiko-reviews-prod"
+database_id = "02781aff-0512-48f3-9c55-d3d7609ea918"
+preview_database_id = "02781aff-0512-48f3-9c55-d3d7609ea918"
+
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "mitsuhiko-photos"
+
+[env.production]
+production_branch = "main"
+
+[[env.production.d1_databases]]
 binding = "DB"
 database_name = "mitsuhiko-reviews-prod"
 database_id = "02781aff-0512-48f3-9c55-d3d7609ea918"

@@ -1,4 +1,12 @@
 {
+  "scripts": {
+    "dev": "npm run db:init && wrangler pages dev .",
+    "db:migrate": "wrangler d1 execute mitsuhiko-reviews-prod --local --file=schema.sql",
+    "db:seed": "wrangler d1 execute mitsuhiko-reviews-prod --local --file=seed.sql",
+    "db:init": "npm run db:migrate && npm run db:seed",
+    "db:ensure": "wrangler d1 execute mitsuhiko-reviews-prod --local --file=schema.sql || true",
+    "db:reset": "wrangler d1 execute mitsuhiko-reviews-prod --local --command=\"DROP TABLE IF EXISTS photos; DROP TABLE IF EXISTS reviews;\" && npm run db:migrate && npm run db:seed"
+  },
   "devDependencies": {
     "wrangler": "^4.50.0"
   }
