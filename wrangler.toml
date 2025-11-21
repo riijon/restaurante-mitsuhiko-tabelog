@@ -19,3 +19,7 @@ production_branch = "main"
 binding = "DB"
 database_name = "mitsuhiko-reviews-prod"
 database_id = "02781aff-0512-48f3-9c55-d3d7609ea918"
+
+[[env.production.r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "mitsuhiko-photos"
