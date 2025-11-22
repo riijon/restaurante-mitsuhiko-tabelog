@@ -4,12 +4,14 @@ const PHOTOS_API = "/api/photos";
 const UPLOAD_API = "/api/photos/upload";
 const STATS_API = "/api/stats";
 const SAVE_API = "/api/saves";
+const REPLIES_API = "/api/replies";
 
 // User icon options
 const USER_ICONS = ["🍔", "🍷", "👤", "🍜", "🍰"];
 
 // Local state
 let cachedReviews = [];
+let cachedReplies = [];
 let showAllReviews = false;
 let currentSaveCount = 0;
 
@@ -17,9 +19,11 @@ let currentSaveCount = 0;
 document.addEventListener("DOMContentLoaded", () => {
   loadStats();
   loadReviews();
+  loadReplies();
   loadUserPhotos();
   initializeModals();
   initializeReviewForm();
+  initializeReplyForm();
   initializePhotoUpload();
   initializeTabNavigation();
   initializeSPNavigation();
@@ -28,6 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeReviewToggle();
   initializeReviewExpandHandlers();
   initializeSaveButtons();
+  initializePhotoZoom();
+  initializeReplyButtons();
 });
 
 // Initialize Modals
@@ -82,6 +88,17 @@ function initializeModals() {
     });
   }
 
+  // Reply Modal
+  const replyModal = document.getElementById("replyModal");
+  const closeReplyBtn = document.getElementById("closeReplyModal");
+
+  if (closeReplyBtn && replyModal) {
+    closeReplyBtn.addEventListener("click", () => {
+      replyModal.classList.remove("active");
+      document.body.style.overflow = "";
+    });
+  }
+
   // Close on click outside
   window.addEventListener("click", (e) => {
     if (e.target === photoModal) {
@@ -90,6 +107,10 @@ function initializeModals() {
     }
     if (e.target === reviewModal) {
       reviewModal.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+    if (e.target === replyModal) {
+      replyModal.classList.remove("active");
       document.body.style.overflow = "";
     }
   });
@@ -468,8 +489,30 @@ function createReviewCardHTML(review, isPickup = false) {
   const userIcon = review.user_icon || "👤";
   const fullComment = escapeHtml(review.comment);
 
+  // Find reply for this review
+  const reply = cachedReplies.find((r) => r.review_id === review.id);
+  const replyHTML = reply
+    ? `
+            <div class="store-reply">
+                <div class="store-reply-header">
+                    <span class="store-badge">お店から</span>
+                </div>
+                <div class="store-reply-text">${escapeHtml(reply.reply_text)}</div>
+            </div>
+        `
+    : "";
+
   return `
-        <div class="review-card ${isPickup ? "pickup-card" : ""}">
+        <div class="review-card ${isPickup ? "pickup-card" : ""}" data-review-id="${review.id}">
+            <div class="review-header-actions">
+                <button class="review-settings-btn" data-review-id="${review.id}" title="返信する">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <circle cx="8" cy="3" r="1.5"/>
+                        <circle cx="8" cy="8" r="1.5"/>
+                        <circle cx="8" cy="13" r="1.5"/>
+                    </svg>
+                </button>
+            </div>
             <h3 class="review-title">${escapeHtml(title)}</h3>
             <p class="review-excerpt">${escapeHtml(excerpt)}</p>
             <div class="review-full">${fullComment}</div>
@@ -493,6 +536,7 @@ function createReviewCardHTML(review, isPickup = false) {
                     </div>
                 </div>
             </div>
+            ${replyHTML}
         </div>
     `;
 }
@@ -913,4 +957,202 @@ function escapeHtml(text) {
   const div = document.createElement("div");
   div.textContent = text;
   return div.innerHTML;
+}
+
+// Initialize Photo Zoom
+function initializePhotoZoom() {
+  const photoZoomModal = document.getElementById("photoZoomModal");
+  const photoZoomImage = document.getElementById("photoZoomImage");
+  const closePhotoZoom = document.getElementById("closePhotoZoom");
+
+  // Close modal
+  if (closePhotoZoom && photoZoomModal) {
+    closePhotoZoom.addEventListener("click", () => {
+      photoZoomModal.classList.remove("active");
+      document.body.style.overflow = "";
+    });
+  }
+
+  // Close on click outside
+  if (photoZoomModal) {
+    photoZoomModal.addEventListener("click", (e) => {
+      if (e.target === photoZoomModal) {
+        photoZoomModal.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+    });
+  }
+
+  // Add click handlers to user photos
+  document.addEventListener("click", (e) => {
+    const photoItem = e.target.closest(".user-photo-item");
+    if (photoItem) {
+      const img = photoItem.querySelector(".user-photo-image img");
+      if (img && photoZoomImage && photoZoomModal) {
+        photoZoomImage.src = img.src;
+        photoZoomImage.alt = img.alt;
+        photoZoomModal.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+    }
+  });
+}
+
+// Load replies from API
+async function loadReplies() {
+  try {
+    const response = await fetch(REPLIES_API);
+
+    if (!response.ok) {
+      throw new Error("Failed to load replies");
+    }
+
+    const data = await response.json();
+    cachedReplies = data.replies || [];
+  } catch (error) {
+    console.error("Error loading replies:", error);
+    cachedReplies = [];
+  }
+}
+
+// Initialize reply buttons
+function initializeReplyButtons() {
+  document.addEventListener("click", (e) => {
+    const settingsBtn = e.target.closest(".review-settings-btn");
+    if (settingsBtn) {
+      e.stopPropagation();
+      const reviewId = settingsBtn.dataset.reviewId;
+      openReplyModal(reviewId);
+    }
+  });
+}
+
+// Open reply modal
+function openReplyModal(reviewId) {
+  const replyModal = document.getElementById("replyModal");
+  if (!replyModal) return;
+
+  // Check if reply already exists
+  const existingReply = cachedReplies.find((r) => r.review_id === parseInt(reviewId));
+  if (existingReply) {
+    alert("この口コミには既に返信が投稿されています");
+    return;
+  }
+
+  // Set review ID in modal
+  document.getElementById("replyReviewId").value = reviewId;
+
+  // Clear form
+  document.getElementById("replyUsername").value = "";
+  document.getElementById("replyPassword").value = "";
+  document.getElementById("replyText").value = "";
+  document.getElementById("replyCharCount").textContent = "0";
+
+  // Open modal
+  replyModal.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+// Initialize reply form
+function initializeReplyForm() {
+  const form = document.getElementById("replyForm");
+  const replyText = document.getElementById("replyText");
+  const charCount = document.getElementById("replyCharCount");
+
+  if (replyText && charCount) {
+    replyText.addEventListener("input", () => {
+      charCount.textContent = replyText.value.length;
+    });
+  }
+
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      await submitReply(form);
+    });
+  }
+}
+
+// Submit reply
+async function submitReply(form) {
+  const replyMessage = document.getElementById("replyMessage");
+  const submitButton = form.querySelector(".btn-submit");
+  const replyModal = document.getElementById("replyModal");
+
+  // Prepare data
+  const formData = {
+    review_id: parseInt(document.getElementById("replyReviewId").value),
+    username: document.getElementById("replyUsername").value.trim(),
+    password: document.getElementById("replyPassword").value.trim(),
+    reply_text: document.getElementById("replyText").value.trim(),
+  };
+
+  // Validate
+  if (!formData.username || !formData.password) {
+    showReplyMessage("ユーザー名とパスワードを入力してください", "error");
+    return;
+  }
+
+  if (!formData.reply_text) {
+    showReplyMessage("返信内容を入力してください", "error");
+    return;
+  }
+
+  // Disable button
+  submitButton.disabled = true;
+  submitButton.textContent = "投稿中...";
+
+  try {
+    const response = await fetch(REPLIES_API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "返信の投稿に失敗しました");
+    }
+
+    // Success
+    showReplyMessage("返信を投稿しました！", "success");
+    form.reset();
+    document.getElementById("replyCharCount").textContent = "0";
+
+    // Close modal after short delay
+    setTimeout(() => {
+      if (replyModal) {
+        replyModal.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+      // Clear message
+      if (replyMessage) {
+        replyMessage.textContent = "";
+        replyMessage.className = "form-message";
+      }
+    }, 2000);
+
+    // Reload replies and reviews
+    await loadReplies();
+    renderPickupReview();
+    renderReviews();
+  } catch (error) {
+    console.error("Error submitting reply:", error);
+    showReplyMessage(error.message, "error");
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "返信を投稿する";
+  }
+}
+
+// Show reply message
+function showReplyMessage(message, type) {
+  const replyMessage = document.getElementById("replyMessage");
+  if (replyMessage) {
+    replyMessage.textContent = message;
+    replyMessage.className = `form-message ${type}`;
+  }
 }
