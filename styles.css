@@ -826,6 +826,67 @@ body {
   display: block;
 }
 
+/* Review Header Actions */
+.review-header-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.review-card {
+  position: relative;
+}
+
+.review-settings-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-gray);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.review-settings-btn:hover {
+  background: var(--bg-light);
+  color: var(--text-dark);
+}
+
+/* Store Reply */
+.store-reply {
+  margin-top: 15px;
+  padding: 12px;
+  background: #f0f8ff;
+  border-left: 3px solid #2196f3;
+  border-radius: 4px;
+}
+
+.store-reply-header {
+  margin-bottom: 8px;
+}
+
+.store-badge {
+  display: inline-block;
+  background: #2196f3;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.store-reply-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-dark);
+  white-space: pre-wrap;
+}
+
 /* Info Section - Table Style */
 .info-section {
   background: var(--bg-white);

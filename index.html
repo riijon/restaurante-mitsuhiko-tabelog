@@ -381,6 +381,71 @@
       </div>
     </div>
 
+    <!-- Reply Modal -->
+    <div id="replyModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">お店から返信する</h3>
+          <button class="modal-close" id="closeReplyModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="replyForm" class="review-form">
+            <input type="hidden" id="replyReviewId" />
+            
+            <div class="form-group">
+              <label class="form-label" for="replyUsername"
+                >ユーザー名 <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="replyUsername"
+                name="replyUsername"
+                class="form-input"
+                required
+                maxlength="50"
+                placeholder="yusa"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="replyPassword"
+                >パスワード <span class="required">*</span></label
+              >
+              <input
+                type="password"
+                id="replyPassword"
+                name="replyPassword"
+                class="form-input"
+                required
+                maxlength="50"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="replyText"
+                >返信内容 <span class="required">*</span></label
+              >
+              <textarea
+                id="replyText"
+                name="replyText"
+                class="form-textarea"
+                rows="6"
+                required
+                maxlength="500"
+                placeholder="お客様へのメッセージをお書きください"
+              ></textarea>
+              <div class="char-count"><span id="replyCharCount">0</span>/500</div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-submit">返信を投稿する</button>
+            </div>
+          </form>
+          <div id="replyMessage" class="form-message"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- Review Modal -->
     <div id="reviewModal" class="modal">
       <div class="modal-content">
